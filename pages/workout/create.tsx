@@ -1,9 +1,29 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
+import FormSection from "../../components/FormSection";
+import ViewSection from "../../components/ViewSection";
 import styles from "../../styles/Home.module.css";
 
 const Create: NextPage = () => {
+  const [warmup, setWarmup] = useState({});
+  const [exercise, setExercise] = useState({});
+  const [stretches, setStretches] = useState({});
+
+  const handleWarmupChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWarmup({ warmup: event.target.value });
+  };
+
+  const handleExerciseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setExercise({ exercise: event.target.value });
+  };
+  const handleStretchesChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setStretches({ streches: event.target.value });
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,9 +37,17 @@ const Create: NextPage = () => {
         </a>
       </Link>
       <h1>Create a new workout</h1>
-      <h2>Warmup</h2>
-      <h2>Main Exercises</h2>
-      <h2>Stretches</h2>
+      <div className={styles.addWorkoutForm}>
+        <FormSection type="Warmup" handleChange={handleWarmupChange} />
+        <FormSection type="Exercises" handleChange={handleExerciseChange} />
+        <FormSection type="Stretches" handleChange={handleStretchesChange} />
+      </div>
+      <h2>View your planned workout below:</h2>
+      <div>
+        <ViewSection workoutSection={warmup} />
+        <ViewSection workoutSection={exercise} />
+        <ViewSection workoutSection={stretches} />
+      </div>
     </div>
   );
 };
