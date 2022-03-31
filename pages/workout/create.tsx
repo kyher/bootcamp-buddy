@@ -5,23 +5,42 @@ import { useState } from "react";
 import FormSection from "../../components/FormSection";
 import ViewSection from "../../components/ViewSection";
 import styles from "../../styles/Home.module.css";
+import { exercise } from "../../types";
+import { WARMUP, EXERCISE, STRETCH } from "../../consts";
 
 const Create: NextPage = () => {
-  const [warmup, setWarmup] = useState({});
-  const [exercise, setExercise] = useState({});
-  const [stretches, setStretches] = useState({});
+  const [exercises, setExercises] = useState<Array<exercise>>([]);
+  const [warmup, setWarmup] = useState<exercise>({
+    title: "",
+    duration: 0,
+    type: "",
+  });
+  const [exercise, setExercise] = useState<exercise>({
+    title: "",
+    duration: 0,
+    type: "",
+  });
+  const [stretches, setStretches] = useState<exercise>({
+    title: "",
+    duration: 0,
+    type: "",
+  });
 
   const handleWarmupChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setWarmup({ warmup: event.target.value });
+    setWarmup({ title: event.target.value, duration: 50, type: WARMUP });
   };
 
   const handleExerciseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setExercise({ exercise: event.target.value });
+    setExercise({ title: event.target.value, duration: 50, type: EXERCISE });
   };
   const handleStretchesChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setStretches({ streches: event.target.value });
+    setStretches({ title: event.target.value, duration: 50, type: STRETCH });
+  };
+
+  const handleSubmit = () => {
+    setExercises([warmup, exercise, stretches]);
   };
 
   return (
@@ -41,12 +60,11 @@ const Create: NextPage = () => {
         <FormSection type="Warmup" handleChange={handleWarmupChange} />
         <FormSection type="Exercises" handleChange={handleExerciseChange} />
         <FormSection type="Stretches" handleChange={handleStretchesChange} />
+        <button onClick={handleSubmit}>Add</button>
       </div>
       <h2>View your planned workout below:</h2>
       <div>
-        <ViewSection workoutSection={warmup} />
-        <ViewSection workoutSection={exercise} />
-        <ViewSection workoutSection={stretches} />
+        <ViewSection exercises={exercises} />
       </div>
     </div>
   );
