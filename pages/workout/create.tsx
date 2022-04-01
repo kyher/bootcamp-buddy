@@ -5,22 +5,22 @@ import { useState } from "react";
 import FormSection from "../../components/FormSection";
 import ViewSection from "../../components/ViewSection";
 import styles from "../../styles/Home.module.css";
-import { exercise } from "../../types";
+import { Activity } from "../../types";
 import { WARMUP, EXERCISE, STRETCH } from "../../consts";
 
 const Create: NextPage = () => {
-  const [exercises, setExercises] = useState<Array<exercise>>([]);
-  const [warmup, setWarmup] = useState<exercise>({
+  const [activities, setActivities] = useState<Array<Activity>>([]);
+  const [warmup, setWarmup] = useState<Activity>({
     title: "",
     duration: 0,
     type: "",
   });
-  const [exercise, setExercise] = useState<exercise>({
+  const [exercise, setExercise] = useState<Activity>({
     title: "",
     duration: 0,
     type: "",
   });
-  const [stretches, setStretches] = useState<exercise>({
+  const [stretches, setStretches] = useState<Activity>({
     title: "",
     duration: 0,
     type: "",
@@ -40,7 +40,7 @@ const Create: NextPage = () => {
   };
 
   const handleSubmit = () => {
-    setExercises([warmup, exercise, stretches]);
+    setActivities([warmup, exercise, stretches]);
   };
 
   return (
@@ -64,7 +64,7 @@ const Create: NextPage = () => {
       </div>
       <h2>View your planned workout below:</h2>
       <div>
-        <ViewSection exercises={exercises} />
+        <ViewSection activities={activities} />
       </div>
     </div>
   );

@@ -1,31 +1,17 @@
-import { exercise } from "../types";
+import { Activity } from "../types";
 import { WARMUP, EXERCISE, STRETCH } from "../consts";
+import ActivityList from "./ActivityList";
 
 type props = {
-  exercises: exercise[];
+  activities: Activity[];
 };
 
-const ViewSection = ({ exercises }: props) => {
+const ViewSection = ({ activities }: props) => {
   return (
     <div>
-      <h3>Warmups</h3>
-      {exercises
-        .filter((exercise) => exercise.type === WARMUP)
-        .map((exercise, index) => (
-          <p key={index}>{exercise.title}</p>
-        ))}
-      <h3>Exercises</h3>
-      {exercises
-        .filter((exercise) => exercise.type === EXERCISE)
-        .map((excercise, index) => (
-          <p key={index}>{excercise.title}</p>
-        ))}
-      <h3>Stretches</h3>
-      {exercises
-        .filter((exercise) => exercise.type === STRETCH)
-        .map((excercise, index) => (
-          <p key={index}>{excercise.title}</p>
-        ))}
+      <ActivityList type={WARMUP} activities={activities} />
+      <ActivityList type={EXERCISE} activities={activities} />
+      <ActivityList type={STRETCH} activities={activities} />
     </div>
   );
 };
