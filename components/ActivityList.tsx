@@ -8,7 +8,7 @@ type props = {
 const ActivityList = ({ activities, type }: props) => {
   return (
     <div>
-      <h3>{type.toUpperCase()}</h3>
+      <h3 className="text-lg italic">{type.toUpperCase()}</h3>
       {activities
         .filter((actvity) => actvity.type === type)
         .map((type, index) => (
