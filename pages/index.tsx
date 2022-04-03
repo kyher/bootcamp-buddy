@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { HomeLink } from "../components";
 
 const Home: NextPage = () => {
@@ -12,20 +11,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid place-items-center justify-evenly	 h-screen ">
+      <main className="grid place-items-center gap-5 m-5 w-full">
         <h1 className="text-3xl bold">🏋️ Bootcamp Buddy! 🏋️</h1>
+        <div className="grid grid-cols-3 gap-1 w-2/3 my-10">
+          <HomeLink title="Create workout" link="/workout/create" />
 
-        <HomeLink
-          title="Create"
-          linkText="Create your bootcamp workout!"
-          link="/workout/create"
-        />
+          <HomeLink title="View workout" link="/workout/view" />
 
-        <HomeLink
-          title="View"
-          linkText="View your workouts!"
-          link="/workout/view"
-        />
+          <HomeLink title="About" link="/about" />
+        </div>
       </main>
     </div>
   );

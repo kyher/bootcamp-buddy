@@ -2,17 +2,15 @@ import Link from "next/link";
 
 type props = {
   title: string;
-  linkText: string;
   link: string;
 };
 
-const HomeLink = ({ title, linkText, link }: props) => {
+const HomeLink = ({ title, link }: props) => {
   return (
-    <div className=" bg-purple-400 p-5 rounded text-lg">
+    <div className="bg-gray-700 text-white shadow-sm p-5 rounded-full text-lg col-span-1">
       <Link href={link}>
-        <a className="underline">
+        <a className="text-center	">
           <h2>{title} &rarr;</h2>
-          <p>{linkText}</p>
         </a>
       </Link>
     </div>
