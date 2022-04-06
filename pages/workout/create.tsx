@@ -8,37 +8,41 @@ import { WARMUP, EXERCISE, STRETCH } from "../../consts";
 
 const Create: NextPage = () => {
   const [activities, setActivities] = useState<Array<Activity>>([]);
-  const [warmup, setWarmup] = useState<Activity>({
-    title: "",
-    duration: 0,
-    type: "",
-  });
-  const [exercise, setExercise] = useState<Activity>({
-    title: "",
-    duration: 0,
-    type: "",
-  });
-  const [stretches, setStretches] = useState<Activity>({
-    title: "",
-    duration: 0,
-    type: "",
-  });
+  const [warmupActivityTitle, setWarmupActivityTitle] = useState("");
+  const [exerciseActivityTitle, setExerciseActivityTitle] = useState("");
+  const [stretchActivityTitle, setStretchActivityTitle] = useState("");
+  const [warmupDuration, setWarmupDuration] = useState(0);
+  const [exerciseDuration, setExerciseDuration] = useState(0);
+  const [stretchDuration, setStretchDuration] = useState(0);
 
-  const handleWarmupChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setWarmup({ title: event.target.value, duration: 50, type: WARMUP });
+  const handleWarmupActivityTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWarmupActivityTitle(event.target.value);
   };
-
-  const handleExerciseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setExercise({ title: event.target.value, duration: 50, type: EXERCISE });
+  
+  const handleExerciseActivityTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setExerciseActivityTitle(event.target.value);
   };
-  const handleStretchesChange = (
+  const handleStretchesActivityTitleChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setStretches({ title: event.target.value, duration: 50, type: STRETCH });
+    setStretchActivityTitle(event.target.value);
+  };
+
+  const handleWarmupActivityDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWarmupDuration(parseInt(event.target.value));
+  };
+  
+  const handleExerciseActivityDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setExerciseDuration(parseInt(event.target.value));
+  };
+  const handleStretchesActivityDurationChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setStretchDuration(parseInt(event.target.value));
   };
 
   const handleSubmit = () => {
-    setActivities([warmup, exercise, stretches]);
+    setActivities([{title: warmupActivityTitle, duration: warmupDuration, type:WARMUP}, {title: exerciseActivityTitle, duration: exerciseDuration, type:EXERCISE}, {title: stretchActivityTitle, duration: stretchDuration, type:STRETCH}]);
   };
 
   return (
@@ -51,9 +55,9 @@ const Create: NextPage = () => {
       <BackButton />
       <h1 className="text-3xl">Create a new workout</h1>
       <div>
-        <FormSection type="Warmup" handleChange={handleWarmupChange} />
-        <FormSection type="Exercises" handleChange={handleExerciseChange} />
-        <FormSection type="Stretches" handleChange={handleStretchesChange} />
+        <FormSection type="Warmup" handleTitleChange={handleWarmupActivityTitleChange} handleDurationChange={handleWarmupActivityDurationChange}/>
+        <FormSection type="Exercise" handleTitleChange={handleExerciseActivityTitleChange} handleDurationChange={handleExerciseActivityDurationChange} />
+        <FormSection type="Stretch" handleTitleChange={handleStretchesActivityTitleChange} handleDurationChange={handleStretchesActivityDurationChange}/>
         <button
           onClick={handleSubmit}
           className="shadow bg-green-500 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full"
@@ -63,7 +67,7 @@ const Create: NextPage = () => {
       </div>
       <h2 className="text-2xl">View your planned workout below:</h2>
       <div>
-        <ViewSection activities={activities} />
+      <ViewSection activities={activities} />
       </div>
     </div>
   );

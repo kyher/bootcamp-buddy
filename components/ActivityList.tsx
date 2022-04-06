@@ -11,8 +11,8 @@ const ActivityList = ({ activities, type }: props) => {
       <h3 className="text-lg italic">{type.toUpperCase()}</h3>
       {activities
         .filter((actvity) => actvity.type === type)
-        .map((type, index) => (
-          <p key={index}>{type.title}</p>
+        .map((activityOfType, index) => (
+          <p key={index}>{activityOfType.title} for {activityOfType.duration} mins</p>
         ))}
     </div>
   );

@@ -3,7 +3,7 @@ import { WARMUP, EXERCISE, STRETCH } from "../consts";
 import ActivityList from "./ActivityList";
 
 type props = {
-  activities: Activity[];
+  activities: Activity[]; 
 };
 
 const ViewSection = ({ activities }: props) => {
