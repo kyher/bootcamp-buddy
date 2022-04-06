@@ -13,7 +13,7 @@ const Home: NextPage = () => {
 
       <main className="grid place-items-center gap-5 m-5 w-full">
         <h1 className="text-3xl bold">🏋️ Bootcamp Buddy! 🏋️</h1>
-        <div className="grid grid-cols-3 gap-1 w-2/3 my-10">
+        <div className="grid md:grid-cols-3 gap-1 w-2/3 my-10">
           <HomeLink title="Create workout" link="/workout/create" />
 
           <HomeLink title="View workout" link="/workout/view" />

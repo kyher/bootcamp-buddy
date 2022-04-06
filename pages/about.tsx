@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
+import { BackButton } from "../components";
 
 const About: NextPage = () => {
   return (
@@ -12,11 +12,7 @@ const About: NextPage = () => {
       </Head>
 
       <main className="grid place-items-center justify-evenly	 h-screen ">
-        <Link href="/">
-          <a>
-            <h2>Go Back</h2>
-          </a>
-        </Link>
+        <BackButton />
         <h1 className="text-3xl bold">About Bootcamp Buddy</h1>
 
         <p>
