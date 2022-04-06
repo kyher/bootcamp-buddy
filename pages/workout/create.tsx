@@ -56,7 +56,7 @@ const Create: NextPage = () => {
         <FormSection type="Stretches" handleChange={handleStretchesChange} />
         <button
           onClick={handleSubmit}
-          className="shadow bg-gray-700	 hover:bg-gray-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full"
+          className="shadow bg-green-500 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full"
         >
           Add
         </button>

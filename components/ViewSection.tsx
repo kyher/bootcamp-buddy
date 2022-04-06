@@ -8,7 +8,7 @@ type props = {
 
 const ViewSection = ({ activities }: props) => {
   return (
-    <div>
+    <div className="grid md:grid-cols-3 gap-5">
       <ActivityList type={WARMUP} activities={activities} />
       <ActivityList type={EXERCISE} activities={activities} />
       <ActivityList type={STRETCH} activities={activities} />

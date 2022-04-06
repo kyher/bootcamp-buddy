@@ -11,13 +11,14 @@ const About: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid place-items-center justify-evenly	 h-screen ">
+      <main className="grid grid-cols-1 place-items-center justify-evenly m-5">
         <BackButton />
-        <h1 className="text-3xl bold">About Bootcamp Buddy</h1>
+        <div>
+          <h1 className="text-3xl bold">About Bootcamp Buddy</h1>
 
-        <p>
-          A site to aid the creation of bootcamp workouts. Made using NextJS.
-        </p>
+          <p className="my-4">A site to aid the creation of bootcamp workouts. Made using NextJS.</p>  
+        </div>
+        
       </main>
     </div>
   );
