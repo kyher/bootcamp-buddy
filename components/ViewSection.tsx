@@ -8,10 +8,13 @@ type props = {
 
 const ViewSection = ({ activities }: props) => {
   return (
-    <div className="grid md:grid-cols-3 gap-5">
+    <div className="bg-gray-700 text-white rounded my-2 p-5">
+    <h1 className="text-3xl my-5">View your planned workout below</h1>
+    <div className="grid md:grid-cols-3 gap-10">
       <ActivityList type={WARMUP} activities={activities} />
       <ActivityList type={EXERCISE} activities={activities} />
       <ActivityList type={STRETCH} activities={activities} />
+    </div>
     </div>
   );
 };
