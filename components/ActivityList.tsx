@@ -1,24 +1,21 @@
-import { DurationBasedActivity, RepBasedActivity } from "../types";
-import { REP, DURATION } from "../consts";
+import { REP } from "../consts";
+import { Activity } from "../types";
+import ActivityCard from "./ActivityCard";
 
 type props = {
-  activities: (DurationBasedActivity | RepBasedActivity)[];
+  activities: Activity[];
   type: string;
-  repOrDuration: string;
 };
 
-const ActivityList = ({ activities, type, repOrDuration }: props) => {
+const ActivityList = ({ activities, type }: props) => {
   return (
     <div>
       <h3 className="text-lg italic">{type.toUpperCase()}</h3>
-      {repOrDuration === DURATION &&
-        activities
-          .filter((activity) => activity.type === type)
-          .map((activityOfType, index) => (
-            <p key={index}>
-              {activityOfType.title} for {activityOfType.duration} mins
-            </p>
-          ))}
+      {activities
+        .filter((activity) => activity.type === type)
+        .map((activity, index) => (
+          <ActivityCard key={index} activity={activity} />
+        ))}
     </div>
   );
 };

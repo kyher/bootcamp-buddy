@@ -3,109 +3,112 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { BackButton, FormSection } from "../../components";
 import { ViewSection } from "../../components";
-import { DurationBasedActivity, RepBasedActivity } from "../../types";
+import { Activity } from "../../types";
 import { WARMUP, EXERCISE, STRETCH, VIEW, REP, DURATION } from "../../consts";
 
 const Create: NextPage = () => {
-  const [activities, setActivities] = useState<
-    Array<DurationBasedActivity | RepBasedActivity>
-  >([]);
-  const [titles, setTitles] = useState({
-    warmup: "",
-    exercise: "",
-    stretch: "",
+  const [activities, setActivities] = useState<Array<Activity>>([]);
+
+  const [warmups, setWarmups] = useState<Activity>({
+    title: "",
+    type: "",
+    repOrDuration: "",
   });
-  const [durations, setDurations] = useState({
-    warmup: 0,
-    exercise: 0,
-    stretch: 0,
+
+  const [exercises, setExercises] = useState<Activity>({
+    title: "",
+    type: "",
+    repOrDuration: "",
   });
-  const [reps, setReps] = useState({
-    warmup: 0,
-    exercise: 0,
-    stretch: 0,
+
+  const [stretches, setStretches] = useState<Activity>({
+    title: "",
+    type: "",
+    repOrDuration: "",
   });
+
   const [currentStep, setcurrentStep] = useState(WARMUP);
-  const [repOrDuration, setRepOrDuration] = useState({
-    warmup: "",
-    exercise: "",
-    stretch: "",
-  });
+
+  const [repOrDuration, setRepOrDuration] = useState("");
 
   useEffect(() => {
     localStorage.setItem("activities", JSON.stringify(activities));
   }, [activities]);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.name;
     const value = event.target.value;
-    setTitles({ ...titles, [event.target.name]: value });
+    if (name === WARMUP) {
+      setWarmups({ ...warmups, title: value });
+    }
+    if (name === EXERCISE) {
+      setExercises({ ...exercises, title: value });
+    }
+    if (name === STRETCH) {
+      setStretches({ ...stretches, title: value });
+    }
   };
 
   const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.name;
     const value = parseInt(event.target.value);
-    setDurations({ ...durations, [event.target.name]: value });
+    if (name === WARMUP) {
+      setWarmups({ ...warmups, duration: value });
+    }
+    if (name === EXERCISE) {
+      setExercises({ ...exercises, duration: value });
+    }
+    if (name === STRETCH) {
+      setStretches({ ...stretches, duration: value });
+    }
   };
 
   const handleRepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.name;
     const value = parseInt(event.target.value);
-    setReps({ ...reps, [event.target.name]: value });
+    if (name === WARMUP) {
+      setWarmups({ ...warmups, reps: value });
+    }
+    if (name === EXERCISE) {
+      setExercises({ ...exercises, reps: value });
+    }
+    if (name === STRETCH) {
+      setStretches({ ...stretches, reps: value });
+    }
   };
 
   const handleRepOrDurationChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    const name = event.target.name;
     const value = event.target.value;
-    setRepOrDuration({
-      ...repOrDuration,
-      [event.target.name]: value,
-    });
+    setRepOrDuration(value);
+    if (name === WARMUP) {
+      setWarmups({ ...warmups, repOrDuration: value });
+    }
+    if (name === EXERCISE) {
+      setExercises({ ...exercises, repOrDuration: value });
+    }
+    if (name === STRETCH) {
+      setStretches({ ...stretches, repOrDuration: value });
+    }
   };
 
   const handleSubmit = () => {
     if (currentStep === WARMUP) {
       setcurrentStep(EXERCISE);
+      setRepOrDuration("");
     }
     if (currentStep === EXERCISE) {
       setcurrentStep(STRETCH);
+      setRepOrDuration("");
     }
     if (currentStep === STRETCH) {
-      let warmupToAdd, exerciseToAdd, stretchToAdd;
-      if (repOrDuration.warmup === REP) {
-        warmupToAdd = { title: titles.warmup, reps: reps.warmup, type: WARMUP };
-      } else {
-        warmupToAdd = {
-          title: titles.warmup,
-          duration: durations.warmup,
-          type: WARMUP,
-        };
-      }
-      if (repOrDuration.exercise === REP) {
-        exerciseToAdd = {
-          title: titles.exercise,
-          reps: reps.exercise,
-          type: EXERCISE,
-        };
-      } else {
-        exerciseToAdd = {
-          title: titles.exercise,
-          duration: durations.exercise,
-          type: EXERCISE,
-        };
-      }
-      if (repOrDuration.stretch === REP) {
-        stretchToAdd = {
-          title: titles.stretch,
-          reps: reps.stretch,
-          type: STRETCH,
-        };
-      } else {
-        stretchToAdd = {
-          title: titles.stretch,
-          duration: durations.stretch,
-          type: STRETCH,
-        };
-      }
-      setActivities([warmupToAdd, exerciseToAdd, stretchToAdd]);
+      setActivities([
+        { ...warmups, type: WARMUP },
+        { ...exercises, type: EXERCISE },
+        { ...stretches, type: STRETCH },
+      ]);
       localStorage.setItem("activities", JSON.stringify(activities));
       setcurrentStep(VIEW);
     }
@@ -123,7 +126,7 @@ const Create: NextPage = () => {
         {currentStep === WARMUP && (
           <FormSection
             type={WARMUP}
-            repOrDuration={repOrDuration.warmup}
+            repOrDuration={repOrDuration}
             handleRepOrDurationChange={handleRepOrDurationChange}
             handleTitleChange={handleTitleChange}
             handleDurationChange={handleDurationChange}
@@ -134,7 +137,7 @@ const Create: NextPage = () => {
         {currentStep === EXERCISE && (
           <FormSection
             type={EXERCISE}
-            repOrDuration={repOrDuration.exercise}
+            repOrDuration={repOrDuration}
             handleRepOrDurationChange={handleRepOrDurationChange}
             handleTitleChange={handleTitleChange}
             handleDurationChange={handleDurationChange}
@@ -145,7 +148,7 @@ const Create: NextPage = () => {
         {currentStep === STRETCH && (
           <FormSection
             type={STRETCH}
-            repOrDuration={repOrDuration.stretch}
+            repOrDuration={repOrDuration}
             handleRepOrDurationChange={handleRepOrDurationChange}
             handleTitleChange={handleTitleChange}
             handleDurationChange={handleDurationChange}
@@ -153,9 +156,7 @@ const Create: NextPage = () => {
             handleSubmit={handleSubmit}
           />
         )}
-        {currentStep === VIEW && (
-          <ViewSection activities={activities} repOrDuration={repOrDuration} />
-        )}
+        {currentStep === VIEW && <ViewSection activities={activities} />}
       </div>
     </div>
   );
