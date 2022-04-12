@@ -3,40 +3,111 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { BackButton, FormSection } from "../../components";
 import { ViewSection } from "../../components";
-import { Activity } from "../../types";
-import { WARMUP, EXERCISE, STRETCH, VIEW } from "../../consts";
+import { DurationBasedActivity, RepBasedActivity } from "../../types";
+import { WARMUP, EXERCISE, STRETCH, VIEW, REP, DURATION } from "../../consts";
 
 const Create: NextPage = () => {
-  const [activities, setActivities] = useState<Array<Activity>>([]);
-  const [titles, setTitles] = useState({warmup: '', exercise: '', stretch: ''});
-  const [durations, setDurations] = useState({warmup: 0, exercise: 0, stretch: 0});
+  const [activities, setActivities] = useState<
+    Array<DurationBasedActivity | RepBasedActivity>
+  >([]);
+  const [titles, setTitles] = useState({
+    warmup: "",
+    exercise: "",
+    stretch: "",
+  });
+  const [durations, setDurations] = useState({
+    warmup: 0,
+    exercise: 0,
+    stretch: 0,
+  });
+  const [reps, setReps] = useState({
+    warmup: 0,
+    exercise: 0,
+    stretch: 0,
+  });
   const [currentStep, setcurrentStep] = useState(WARMUP);
+  const [repOrDuration, setRepOrDuration] = useState({
+    warmup: "",
+    exercise: "",
+    stretch: "",
+  });
 
   useEffect(() => {
-    localStorage.setItem('activities', JSON.stringify(activities))
+    localStorage.setItem("activities", JSON.stringify(activities));
   }, [activities]);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setTitles({...titles, [event.target.name]: value});
+    setTitles({ ...titles, [event.target.name]: value });
   };
 
   const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
-    setDurations({...durations, [event.target.name] : value});
+    setDurations({ ...durations, [event.target.name]: value });
   };
-  
+
+  const handleRepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+    setReps({ ...reps, [event.target.name]: value });
+  };
+
+  const handleRepOrDurationChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setRepOrDuration({
+      ...repOrDuration,
+      [event.target.name]: value,
+    });
+  };
+
   const handleSubmit = () => {
-    if(currentStep === WARMUP){
-      setcurrentStep(EXERCISE)
+    if (currentStep === WARMUP) {
+      setcurrentStep(EXERCISE);
     }
-    if(currentStep === EXERCISE){
-      setcurrentStep(STRETCH)
+    if (currentStep === EXERCISE) {
+      setcurrentStep(STRETCH);
     }
-    if(currentStep === STRETCH){
-      setActivities([{title: titles.warmup, duration: durations.warmup, type:WARMUP}, {title: titles.exercise, duration: durations.exercise, type:EXERCISE}, {title: titles.stretch, duration: durations.stretch, type:STRETCH}]);
-      localStorage.setItem('activities', JSON.stringify(activities));
-      setcurrentStep(VIEW)
+    if (currentStep === STRETCH) {
+      let warmupToAdd, exerciseToAdd, stretchToAdd;
+      if (repOrDuration.warmup === REP) {
+        warmupToAdd = { title: titles.warmup, reps: reps.warmup, type: WARMUP };
+      } else {
+        warmupToAdd = {
+          title: titles.warmup,
+          duration: durations.warmup,
+          type: WARMUP,
+        };
+      }
+      if (repOrDuration.exercise === REP) {
+        exerciseToAdd = {
+          title: titles.exercise,
+          reps: reps.exercise,
+          type: EXERCISE,
+        };
+      } else {
+        exerciseToAdd = {
+          title: titles.exercise,
+          duration: durations.exercise,
+          type: EXERCISE,
+        };
+      }
+      if (repOrDuration.stretch === REP) {
+        stretchToAdd = {
+          title: titles.stretch,
+          reps: reps.stretch,
+          type: STRETCH,
+        };
+      } else {
+        stretchToAdd = {
+          title: titles.stretch,
+          duration: durations.stretch,
+          type: STRETCH,
+        };
+      }
+      setActivities([warmupToAdd, exerciseToAdd, stretchToAdd]);
+      localStorage.setItem("activities", JSON.stringify(activities));
+      setcurrentStep(VIEW);
     }
   };
 
@@ -49,10 +120,42 @@ const Create: NextPage = () => {
       </Head>
       <BackButton />
       <div>
-        {currentStep === WARMUP && <FormSection type={WARMUP} handleTitleChange={handleTitleChange} handleDurationChange={handleDurationChange} handleSubmit={handleSubmit} />}
-        {currentStep === EXERCISE && <FormSection type={EXERCISE} handleTitleChange={handleTitleChange} handleDurationChange={handleDurationChange} handleSubmit={handleSubmit} />}
-        {currentStep === STRETCH && <FormSection type={STRETCH} handleTitleChange={handleTitleChange} handleDurationChange={handleDurationChange} handleSubmit={handleSubmit} />}
-        {currentStep === VIEW && <ViewSection activities={activities} />}
+        {currentStep === WARMUP && (
+          <FormSection
+            type={WARMUP}
+            repOrDuration={repOrDuration.warmup}
+            handleRepOrDurationChange={handleRepOrDurationChange}
+            handleTitleChange={handleTitleChange}
+            handleDurationChange={handleDurationChange}
+            handleRepChange={handleRepChange}
+            handleSubmit={handleSubmit}
+          />
+        )}
+        {currentStep === EXERCISE && (
+          <FormSection
+            type={EXERCISE}
+            repOrDuration={repOrDuration.exercise}
+            handleRepOrDurationChange={handleRepOrDurationChange}
+            handleTitleChange={handleTitleChange}
+            handleDurationChange={handleDurationChange}
+            handleRepChange={handleRepChange}
+            handleSubmit={handleSubmit}
+          />
+        )}
+        {currentStep === STRETCH && (
+          <FormSection
+            type={STRETCH}
+            repOrDuration={repOrDuration.stretch}
+            handleRepOrDurationChange={handleRepOrDurationChange}
+            handleTitleChange={handleTitleChange}
+            handleDurationChange={handleDurationChange}
+            handleRepChange={handleRepChange}
+            handleSubmit={handleSubmit}
+          />
+        )}
+        {currentStep === VIEW && (
+          <ViewSection activities={activities} repOrDuration={repOrDuration} />
+        )}
       </div>
     </div>
   );

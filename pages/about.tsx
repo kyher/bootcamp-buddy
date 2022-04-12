@@ -16,9 +16,10 @@ const About: NextPage = () => {
         <div>
           <h1 className="text-3xl bold">About Bootcamp Buddy</h1>
 
-          <p className="my-4">A site to aid the creation of bootcamp workouts. Made using NextJS.</p>  
+          <p className="my-4">
+            A site to aid the creation of bootcamp workouts. Made using NextJS.
+          </p>
         </div>
-        
       </main>
     </div>
   );
