@@ -1,7 +1,16 @@
-import { DURATION, REP, STRETCH } from "../consts";
+import {
+  DURATION,
+  MAX_DURATION,
+  MAX_REPS,
+  MIN_DURATION,
+  MIN_REPS,
+  REP,
+  STRETCH,
+} from "../consts";
 
 type props = {
   type: string;
+  error: string;
   repOrDuration: string;
   handleRepOrDurationChange: (
     event: React.ChangeEvent<HTMLInputElement>
@@ -14,6 +23,7 @@ type props = {
 
 const FormSection = ({
   type,
+  error,
   repOrDuration,
   handleRepOrDurationChange,
   handleTitleChange,
@@ -22,7 +32,7 @@ const FormSection = ({
   handleSubmit,
 }: props) => {
   return (
-    <div className="bg-gray-700	 text-white rounded  my-2 p-5">
+    <div className="bg-gray-700	 text-white rounded w-full my-2 p-10">
       <h1 className="text-3xl">Create a new workout</h1>
       <label className="capitalize" htmlFor={type}>
         {type}
@@ -50,6 +60,8 @@ const FormSection = ({
           <input
             type="number"
             id={type + "_duration"}
+            min={MIN_DURATION}
+            max={MAX_DURATION}
             name={type}
             onChange={handleDurationChange}
             className="shadow appearance-none border  rounded-full w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -64,6 +76,8 @@ const FormSection = ({
           <input
             type="number"
             id={type + "_reps"}
+            min={MIN_REPS}
+            max={MAX_REPS}
             name={type}
             onChange={handleRepChange}
             className="shadow appearance-none border  rounded-full w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -77,6 +91,7 @@ const FormSection = ({
       >
         {type === STRETCH ? "Submit & View Workout" : "Add & Continue"}
       </button>
+      {error ? <span className="w-full text-red-400">{error}</span> : ""}
     </div>
   );
 };

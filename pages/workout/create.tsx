@@ -4,10 +4,21 @@ import { useState, useEffect } from "react";
 import { BackButton, FormSection } from "../../components";
 import { ViewSection } from "../../components";
 import { Activity } from "../../types";
-import { WARMUP, EXERCISE, STRETCH, VIEW, REP, DURATION } from "../../consts";
+import {
+  WARMUP,
+  EXERCISE,
+  STRETCH,
+  VIEW,
+  REP,
+  DURATION,
+  MIN_REPS,
+  MAX_REPS,
+  MIN_DURATION,
+  MAX_DURATION,
+} from "../../consts";
 
 const Create: NextPage = () => {
-  const [activities, setActivities] = useState<Array<Activity>>([]);
+  const [activities, setActivities] = useState<Activity[]>([]);
 
   const [warmups, setWarmups] = useState<Activity>({
     title: "",
@@ -28,6 +39,8 @@ const Create: NextPage = () => {
   });
 
   const [currentStep, setcurrentStep] = useState(WARMUP);
+
+  const [error, setError] = useState("");
 
   const [repOrDuration, setRepOrDuration] = useState("");
 
@@ -92,25 +105,85 @@ const Create: NextPage = () => {
     if (name === STRETCH) {
       setStretches({ ...stretches, repOrDuration: value });
     }
+    setError("");
+  };
+
+  const validate = (type: Activity) => {
+    let valid = true;
+    if (!type.title) {
+      setError("Please add a title.");
+      valid = false;
+    }
+
+    if (!type.repOrDuration) {
+      setError("Please select rep or duration based.");
+      valid = false;
+    }
+
+    if (type.repOrDuration === REP) {
+      if (!type.reps) {
+        setError("Please enter reps amount.");
+        valid = false;
+      }
+      if (type.reps && type.reps < parseInt(MIN_REPS)) {
+        setError(`Please enter at least ${MIN_REPS} reps.`);
+        valid = false;
+      }
+      if (type.reps && type.reps > parseInt(MAX_REPS)) {
+        setError(`Please enter less than ${MAX_REPS} reps.`);
+        valid = false;
+      }
+    }
+
+    if (type.repOrDuration === DURATION) {
+      if (!type.duration) {
+        setError("Please enter a duration");
+        valid = false;
+      }
+      if (type.duration && type.duration < parseInt(MIN_DURATION)) {
+        setError(
+          `Please enter a duration of at least ${MIN_DURATION} minutes.`
+        );
+        valid = false;
+      }
+      if (type.duration && type.duration > parseInt(MAX_DURATION)) {
+        setError(`Please enter a duration under ${MAX_DURATION} minutes.`);
+        valid = false;
+      }
+    }
+
+    return valid;
   };
 
   const handleSubmit = () => {
     if (currentStep === WARMUP) {
-      setcurrentStep(EXERCISE);
-      setRepOrDuration("");
+      const valid = validate(warmups);
+      if (valid) {
+        setcurrentStep(EXERCISE);
+        setRepOrDuration("");
+        setError("");
+      }
     }
     if (currentStep === EXERCISE) {
-      setcurrentStep(STRETCH);
-      setRepOrDuration("");
+      const valid = validate(exercises);
+      if (valid) {
+        setcurrentStep(STRETCH);
+        setRepOrDuration("");
+        setError("");
+      }
     }
     if (currentStep === STRETCH) {
-      setActivities([
-        { ...warmups, type: WARMUP },
-        { ...exercises, type: EXERCISE },
-        { ...stretches, type: STRETCH },
-      ]);
-      localStorage.setItem("activities", JSON.stringify(activities));
-      setcurrentStep(VIEW);
+      const valid = validate(stretches);
+      if (valid) {
+        setActivities([
+          { ...warmups, type: WARMUP },
+          { ...exercises, type: EXERCISE },
+          { ...stretches, type: STRETCH },
+        ]);
+        localStorage.setItem("activities", JSON.stringify(activities));
+        setcurrentStep(VIEW);
+        setError("");
+      }
     }
   };
 
@@ -122,10 +195,11 @@ const Create: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BackButton />
-      <div>
+      <div className="w-1/2">
         {currentStep === WARMUP && (
           <FormSection
             type={WARMUP}
+            error={error}
             repOrDuration={repOrDuration}
             handleRepOrDurationChange={handleRepOrDurationChange}
             handleTitleChange={handleTitleChange}
@@ -137,6 +211,7 @@ const Create: NextPage = () => {
         {currentStep === EXERCISE && (
           <FormSection
             type={EXERCISE}
+            error={error}
             repOrDuration={repOrDuration}
             handleRepOrDurationChange={handleRepOrDurationChange}
             handleTitleChange={handleTitleChange}
@@ -148,6 +223,7 @@ const Create: NextPage = () => {
         {currentStep === STRETCH && (
           <FormSection
             type={STRETCH}
+            error={error}
             repOrDuration={repOrDuration}
             handleRepOrDurationChange={handleRepOrDurationChange}
             handleTitleChange={handleTitleChange}
