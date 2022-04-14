@@ -1,21 +1,25 @@
-import { REP } from "../consts";
 import { Activity } from "../types";
 import ActivityCard from "./ActivityCard";
+import { useEffect, useState } from "react";
 
 type props = {
-  activities: Activity[];
   type: string;
 };
 
-const ActivityList = ({ activities, type }: props) => {
+const ActivityList = ({ type }: props) => {
+  const [activity, setActivity] = useState<Activity>();
+
+  useEffect(() => {
+    const typeInStorage = localStorage.getItem(type);
+    if (typeInStorage) {
+      setActivity(JSON.parse(typeInStorage));
+    }
+  }, [activity, type]);
+
   return (
     <div>
       <h3 className="text-lg italic">{type.toUpperCase()}</h3>
-      {activities
-        .filter((activity) => activity.type === type)
-        .map((activity, index) => (
-          <ActivityCard key={index} activity={activity} />
-        ))}
+      {activity ? <ActivityCard activity={activity} /> : ""}
     </div>
   );
 };

@@ -5,16 +5,6 @@ import { useEffect, useState } from "react";
 import { Activity } from "../../types";
 
 const View: NextPage = () => {
-  const [activities, setActivities] = useState<Array<Activity>>([]);
-
-  useEffect(() => {
-    const activitiesInStorage = localStorage.getItem("activities");
-    console.log(localStorage.getItem("activites"));
-    if (activitiesInStorage) {
-      setActivities(JSON.parse(activitiesInStorage));
-    }
-  }, []);
-
   return (
     <div className="grid place-items-center">
       <Head>
@@ -23,11 +13,7 @@ const View: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BackButton />
-      {activities.length > 0 ? (
-        <ViewSection activities={activities} />
-      ) : (
-        "No activites set yet."
-      )}
+      <ViewSection />
     </div>
   );
 };
