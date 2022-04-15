@@ -19,7 +19,7 @@ const ActivityList = ({ type }: props) => {
   return (
     <div>
       <h3 className="text-lg italic">{type.toUpperCase()}</h3>
-      {activity ? <ActivityCard activity={activity} /> : ""}
+      {activity ? <ActivityCard activity={activity} /> : "No activity set."}
     </div>
   );
 };

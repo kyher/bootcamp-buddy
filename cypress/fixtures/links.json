@@ -1,0 +1,8 @@
+{
+  "links": {
+    "createWorkoutLinkText": "Create workout",
+    "viewWorkoutLinkText": "View workout",
+    "aboutLinkText": "About",
+    "backButtonLinkText": "Go Back"
+  }
+}
