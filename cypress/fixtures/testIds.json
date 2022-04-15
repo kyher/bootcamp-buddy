@@ -1,0 +1,4 @@
+{
+  "HomeLink": "[data-testid=\"HomeLink\"]",
+  "BackButton": "[data-testid=\"BackButton\"]"
+}
