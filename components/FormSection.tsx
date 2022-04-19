@@ -31,7 +31,6 @@ const FormSection = ({ type, setType }: props) => {
           type: type,
         }}
         onSubmit={(values) => {
-          console.log(values);
           if (type === WARMUP) {
             localStorage.setItem(type, JSON.stringify(values));
             setType(EXERCISE);
@@ -47,20 +46,26 @@ const FormSection = ({ type, setType }: props) => {
         }}
         validationSchema={ActivitySchema}
       >
-        {({ errors, touched, values, handleChange, isSubmitting }) => (
+        {({ errors, touched, values, isSubmitting, setFieldValue }) => (
           <Form>
-            <label className="capitalize" htmlFor={type}>
+            <label
+              className="capitalize"
+              htmlFor={type}
+              data-testid="TitleLabel"
+            >
               {type}
             </label>
             <Field
               type="text"
               value={values.title}
-              onChange={handleChange}
               name="title"
               className="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              data-testid="TitleInput"
             />
             {errors.title && touched.title ? (
-              <div className="text-red-400">{errors.title}</div>
+              <div className="text-red-400" data-testid="TitleError">
+                {errors.title}
+              </div>
             ) : null}
             <div className="my-5">
               <label>Is this activity rep or duration based?</label>
@@ -70,6 +75,7 @@ const FormSection = ({ type, setType }: props) => {
                 type="radio"
                 value={REP}
                 name="repOrDuration"
+                data-testid="RepRadio"
               />{" "}
               Rep
               <br />
@@ -78,47 +84,62 @@ const FormSection = ({ type, setType }: props) => {
                 type="radio"
                 value={DURATION}
                 name="repOrDuration"
+                data-testid="DurationRadio"
               />{" "}
               Duration
             </div>
             {errors.repOrDuration && touched.repOrDuration ? (
-              <div className="text-red-400">{errors.repOrDuration}</div>
+              <div className="text-red-400" data-testid="RepOrDurError">
+                {errors.repOrDuration}
+              </div>
             ) : null}
             {values.repOrDuration === DURATION && (
               <>
-                <label className="capitalize" htmlFor={type}>
+                <label
+                  className="capitalize"
+                  htmlFor={type}
+                  data-testid="DurationLabel"
+                >
                   {type} Duration
                 </label>
                 <Field
                   type="number"
-                  onChange={handleChange}
                   min={MIN_DURATION}
                   max={MAX_DURATION}
                   value={values.duration}
                   name="duration"
+                  data-testid="DurationInput"
                   className="shadow appearance-none border  rounded-full w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 />
                 {errors.duration && touched.duration ? (
-                  <div className="text-red-400">{errors.duration}</div>
+                  <div className="text-red-400" data-testid="DurationError">
+                    {errors.duration}
+                  </div>
                 ) : null}
               </>
             )}
             {values.repOrDuration === REP && (
               <>
-                <label className="capitalize" htmlFor={type}>
+                <label
+                  className="capitalize"
+                  htmlFor={type}
+                  data-testid="RepsLabel"
+                >
                   {type} Reps
                 </label>
                 <Field
                   type="number"
-                  onChange={handleChange}
                   min={MIN_REPS}
                   max={MAX_REPS}
                   value={values.reps}
                   name="reps"
+                  data-testid="RepsInput"
                   className="shadow appearance-none border  rounded-full w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 />
                 {errors.reps && touched.reps ? (
-                  <div className="text-red-400">{errors.reps}</div>
+                  <div className="text-red-400" data-testid="RepsError">
+                    {errors.reps}
+                  </div>
                 ) : null}
               </>
             )}
@@ -127,6 +148,7 @@ const FormSection = ({ type, setType }: props) => {
               type="submit"
               disabled={isSubmitting}
               className="shadow bg-green-500 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full"
+              data-testid="SubmitButton"
             >
               {type === STRETCH ? "Submit & View Workout" : "Add & Continue"}
             </button>

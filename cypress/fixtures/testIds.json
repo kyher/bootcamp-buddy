@@ -1,4 +1,17 @@
 {
   "HomeLink": "[data-testid=\"HomeLink\"]",
-  "BackButton": "[data-testid=\"BackButton\"]"
+  "BackButton": "[data-testid=\"BackButton\"]",
+  "TitleInput": "[data-testid=\"TitleInput\"]",
+  "SubmitButton": "[data-testid=\"SubmitButton\"]",
+  "TitleLabel": "[data-testid=\"TitleLabel\"]",
+  "TitleError": "[data-testid=\"TitleError\"]",
+  "RepOrDurationError": "[data-testid=\"RepOrDurError\"]",
+  "RepRadio": "[data-testid=\"RepRadio\"]",
+  "DurationRadio": "[data-testid=\"DurationRadio\"]",
+  "DurationInput": "[data-testid=\"DurationInput\"]",
+  "RepsInput": "[data-testid=\"RepsInput\"]",
+  "DurationLabel": "[data-testid=\"DurationLabel\"]",
+  "RepsLabel": "[data-testid=\"RepsLabel\"]",
+  "RepsError": "[data-testid=\"RepsError\"]",
+  "DurationError": "[data-testid=\"DurationError\"]"
 }
