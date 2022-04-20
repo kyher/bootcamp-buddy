@@ -1,17 +1,7 @@
 import { Field, Form, Formik } from "formik";
-import {
-  DURATION,
-  MAX_DURATION,
-  MAX_REPS,
-  MIN_DURATION,
-  MIN_REPS,
-  REP,
-  STRETCH,
-  WARMUP,
-  EXERCISE,
-  VIEW,
-} from "../consts";
+import { DURATION, REP, STRETCH, WARMUP, EXERCISE, VIEW } from "../consts";
 import { ActivitySchema } from "../schema";
+import FormField from "./FormField";
 
 type props = {
   type: string;
@@ -46,21 +36,13 @@ const FormSection = ({ type, setType }: props) => {
         }}
         validationSchema={ActivitySchema}
       >
-        {({ errors, touched, values, isSubmitting, setFieldValue }) => (
+        {({ errors, touched, values, isSubmitting }) => (
           <Form>
-            <label
-              className="capitalize"
-              htmlFor={type}
-              data-testid="TitleLabel"
-            >
-              {type}
-            </label>
-            <Field
+            <FormField
+              workoutType={type}
               type="text"
               value={values.title}
               name="title"
-              className="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              data-testid="TitleInput"
             />
             {errors.title && touched.title ? (
               <div className="text-red-400" data-testid="TitleError">
@@ -95,21 +77,11 @@ const FormSection = ({ type, setType }: props) => {
             ) : null}
             {values.repOrDuration === DURATION && (
               <>
-                <label
-                  className="capitalize"
-                  htmlFor={type}
-                  data-testid="DurationLabel"
-                >
-                  {type} Duration
-                </label>
-                <Field
+                <FormField
+                  workoutType={type}
                   type="number"
-                  min={MIN_DURATION}
-                  max={MAX_DURATION}
                   value={values.duration}
                   name="duration"
-                  data-testid="DurationInput"
-                  className="shadow appearance-none border  rounded-full w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 />
                 {errors.duration && touched.duration ? (
                   <div className="text-red-400" data-testid="DurationError">
@@ -120,21 +92,11 @@ const FormSection = ({ type, setType }: props) => {
             )}
             {values.repOrDuration === REP && (
               <>
-                <label
-                  className="capitalize"
-                  htmlFor={type}
-                  data-testid="RepsLabel"
-                >
-                  {type} Reps
-                </label>
-                <Field
+                <FormField
+                  workoutType={type}
                   type="number"
-                  min={MIN_REPS}
-                  max={MAX_REPS}
                   value={values.reps}
                   name="reps"
-                  data-testid="RepsInput"
-                  className="shadow appearance-none border  rounded-full w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 />
                 {errors.reps && touched.reps ? (
                   <div className="text-red-400" data-testid="RepsError">
@@ -143,7 +105,6 @@ const FormSection = ({ type, setType }: props) => {
                 ) : null}
               </>
             )}
-
             <button
               type="submit"
               disabled={isSubmitting}
