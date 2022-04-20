@@ -13,5 +13,6 @@
   "DurationLabel": "[data-testid=\"durationLabel\"]",
   "RepsLabel": "[data-testid=\"repsLabel\"]",
   "RepsError": "[data-testid=\"RepsError\"]",
-  "DurationError": "[data-testid=\"DurationError\"]"
+  "DurationError": "[data-testid=\"DurationError\"]",
+  "ActivityCard": "[data-testid=\"ActivityCard\"]"
 }
