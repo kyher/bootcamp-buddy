@@ -1,8 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { BackButton, ViewSection } from "../../components";
-import { useEffect, useState } from "react";
-import { Activity } from "../../types";
 
 const View: NextPage = () => {
   return (

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BackButton, FormSection } from "../../components";
 import { ViewSection } from "../../components";
 import { WARMUP, EXERCISE, STRETCH, VIEW } from "../../consts";
