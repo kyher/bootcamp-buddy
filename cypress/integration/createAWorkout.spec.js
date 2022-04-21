@@ -47,7 +47,6 @@ describe("Check the workout creation functionality", () => {
     cy.get(HomeLink).contains(createWorkoutLinkText).click();
   });
   it("displays the create page", () => {
-    cy.get("h2").contains(createWorkoutLinkText);
     cy.get(BackButton).contains(backButtonLinkText);
     cy.get("h1").contains(createWorkoutHeading);
     cy.get(TitleLabel).contains("warmup");
