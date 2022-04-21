@@ -5,7 +5,7 @@ const BackButton = () => {
     <Link href="/">
       <a
         data-testid="BackButton"
-        className="my-5 underline underline-offset-2 bg-slate-200 hover:bg-slate-300  p-3 rounded-full"
+        className="bg-gray-700 hover:bg-gray-900 text-white shadow-lg p-1 rounded-lg text-lg"
       >
         <h2>Go Back</h2>
       </a>

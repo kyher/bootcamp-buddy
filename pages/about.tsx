@@ -11,9 +11,9 @@ const About: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="grid grid-cols-1 place-items-center justify-evenly m-5">
-        <BackButton />
-        <div>
+      <main className="grid place-items-center gap-5 w-full min-h-screen bg-slate-300 grid-cols-1">
+        <div className="grid place-items-center gap-5 w-1/3">
+          <BackButton />
           <h1 className="text-3xl bold">About Bootcamp Buddy</h1>
 
           <p className="my-4">

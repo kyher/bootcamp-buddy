@@ -9,10 +9,10 @@ const HomeLink = ({ title, link }: props) => {
   return (
     <div
       data-testid="HomeLink"
-      className="bg-gray-700 text-white shadow-sm p-5 rounded-full text-lg col-span-1"
+      className="bg-gray-700 hover:bg-gray-900 text-white shadow-lg p-5 rounded-lg text-lg w-full"
     >
       <Link href={link}>
-        <a className="text-center	">
+        <a className="text-center	font-bold">
           <h2>{title} &rarr;</h2>
         </a>
       </Link>
