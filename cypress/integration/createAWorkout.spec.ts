@@ -33,6 +33,7 @@ import {
   StretchTitle,
   StretchDuration,
 } from "../fixtures/testData.json";
+import "cypress-localstorage-commands";
 
 describe("Check the workout creation functionality", () => {
   beforeEach(() => {
@@ -78,13 +79,13 @@ describe("Check the workout creation functionality", () => {
   });
   it("shows a validation error when inputting too high of a duration", () => {
     cy.get(DurationInput).clear();
-    cy.get(DurationInput).type(300);
+    cy.get(DurationInput).type("300");
     cy.get(SubmitButton).click();
     cy.get(DurationError).contains("Too high");
   });
   it("shows a validation error when inputting too low of a duration", () => {
     cy.get(DurationInput).clear();
-    cy.get(DurationInput).type(-1111);
+    cy.get(DurationInput).type("-1111");
     cy.get(SubmitButton).click();
     cy.get(DurationError).contains("Too low");
   });
@@ -92,13 +93,13 @@ describe("Check the workout creation functionality", () => {
     cy.get(RepRadio).click();
     cy.get(RepsLabel).should("exist");
     cy.get(RepsInput).clear();
-    cy.get(RepsInput).type(300);
+    cy.get(RepsInput).type("300");
     cy.get(SubmitButton).click();
     cy.get(RepsError).contains("Too high");
   });
   it("shows a validation error when inputting too few reps", () => {
     cy.get(RepsInput).clear();
-    cy.get(RepsInput).type(-1111);
+    cy.get(RepsInput).type("-1111");
     cy.get(SubmitButton).click();
     cy.get(RepsError).contains("Too low");
   });

@@ -1,8 +1,8 @@
 {
   "WarmupTitle": "Push ups",
-  "WarmupReps": 5,
+  "WarmupReps": "5",
   "ExerciseTitle": "Assault Bike",
-  "ExerciseDuration": 30,
+  "ExerciseDuration": "30",
   "StretchTitle": "Bird Dog",
-  "StretchDuration": 10
+  "StretchDuration": "10"
 }
