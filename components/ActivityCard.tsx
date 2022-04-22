@@ -7,7 +7,7 @@ type props = {
 
 const ActivityCard = ({ activity }: props) => {
   return (
-    <div className="bg-gray-600 p-5">
+    <div className="bg-gray-600 p-5 rounded">
       <h2 data-testid="ActivityCard">
         {activity.title} for{" "}
         {activity.repOrDuration === REP ? (

@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { HomeLink } from "../components";
+import Heading from "../components/Heading";
 
 const Home: NextPage = () => {
   return (
@@ -12,9 +13,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="grid place-items-center gap-5 w-full min-h-screen bg-slate-300">
         <div className="grid gap-1 my-10 place-items-center w-1/3">
-          <h1 className="text-3xl my-2 text-gray-700 font-bold">
-            🏋️ Bootcamp Buddy 🏋️
-          </h1>
+          <Heading text="🏋️ Bootcamp Buddy 🏋️" />
           <HomeLink title="Create workout" link="/workout/create" />
           <HomeLink title="View workout" link="/workout/view" />
           <HomeLink title="About" link="/about" />
