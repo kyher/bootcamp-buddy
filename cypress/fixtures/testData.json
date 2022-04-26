@@ -4,5 +4,7 @@
   "ExerciseTitle": "Assault Bike",
   "ExerciseDuration": "30",
   "StretchTitle": "Bird Dog",
-  "StretchDuration": "10"
+  "StretchDuration": "10",
+  "SecondStretchTitle": "Twisted Cross",
+  "SecondStretchDuration": "5"
 }

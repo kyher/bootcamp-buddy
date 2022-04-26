@@ -21,19 +21,30 @@ const FormSection = ({ type, setType }: props) => {
             duration: 1,
             reps: 1,
             type: type,
+            addAnother: false,
           }}
-          onSubmit={(values) => {
-            if (type === WARMUP) {
-              localStorage.setItem(type, JSON.stringify(values));
-              setType(EXERCISE);
+          onSubmit={(values, { resetForm }) => {
+            resetForm();
+
+            const typeInStorage = localStorage.getItem(type);
+            if (typeInStorage) {
+              const oldData = JSON.parse(typeInStorage);
+              const newData = [...oldData, values];
+              localStorage.setItem(type, JSON.stringify(newData));
+            } else {
+              localStorage.setItem(type, JSON.stringify([values]));
             }
-            if (type === EXERCISE) {
-              localStorage.setItem(type, JSON.stringify(values));
-              setType(STRETCH);
-            }
-            if (type === STRETCH) {
-              localStorage.setItem(type, JSON.stringify(values));
-              setType(VIEW);
+
+            if (!values.addAnother) {
+              if (type === WARMUP) {
+                setType(EXERCISE);
+              }
+              if (type === EXERCISE) {
+                setType(STRETCH);
+              }
+              if (type === STRETCH) {
+                setType(VIEW);
+              }
             }
           }}
           validationSchema={ActivitySchema}
@@ -107,6 +118,14 @@ const FormSection = ({ type, setType }: props) => {
                   ) : null}
                 </>
               )}
+              <label>
+                Add another?
+                <Field
+                  type="checkbox"
+                  name="addAnother"
+                  data-testid="AddAnother"
+                />
+              </label>
               <button
                 type="submit"
                 disabled={isSubmitting}

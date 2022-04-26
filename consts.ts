@@ -4,6 +4,7 @@ export const STRETCH = "stretch";
 export const VIEW = "view";
 export const REP = "rep";
 export const DURATION = "duration";
+export const INTERSTITIAL = "interstitial";
 export const MIN_DURATION = "1";
 export const MAX_DURATION = "200";
 export const MIN_REPS = "1";

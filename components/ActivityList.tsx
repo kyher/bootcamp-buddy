@@ -7,19 +7,23 @@ type props = {
 };
 
 const ActivityList = ({ type }: props) => {
-  const [activity, setActivity] = useState<Activity>();
+  const [activities, setActivities] = useState<Activity[]>();
 
   useEffect(() => {
     const typeInStorage = localStorage.getItem(type);
     if (typeInStorage) {
-      setActivity(JSON.parse(typeInStorage));
+      setActivities(JSON.parse(typeInStorage));
     }
-  }, [activity, type]);
+  }, [type]);
 
   return (
     <div>
       <h3 className="text-lg italic text-center">{type.toUpperCase()}</h3>
-      {activity ? <ActivityCard activity={activity} /> : "No activity set."}
+      {activities
+        ? activities.map((activity, index) => (
+            <ActivityCard key={index} activity={activity} />
+          ))
+        : "No activity set."}
     </div>
   );
 };

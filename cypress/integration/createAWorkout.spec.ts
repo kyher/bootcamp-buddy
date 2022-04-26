@@ -20,6 +20,10 @@ import {
   DurationError,
   RepsError,
   ActivityCard,
+  AddAnother,
+  InterstitialCreate,
+  InterstitialView,
+  InterstitialText,
 } from "../fixtures/testIds.json";
 import {
   createWorkoutHeading,
@@ -32,6 +36,8 @@ import {
   ExerciseDuration,
   StretchTitle,
   StretchDuration,
+  SecondStretchDuration,
+  SecondStretchTitle,
 } from "../fixtures/testData.json";
 import "cypress-localstorage-commands";
 
@@ -117,11 +123,20 @@ describe("Check the workout creation functionality", () => {
     cy.get(SubmitButton).click();
     cy.get(TitleLabel).contains("stretch");
   });
-  it("submits a valid stretch with valid data", () => {
+  it("submits a valid stretch with valid data, including add another checked", () => {
     cy.get(TitleInput).type(StretchTitle);
     cy.get(DurationRadio).click();
     cy.get(DurationInput).clear();
     cy.get(DurationInput).type(StretchDuration);
+    cy.get(AddAnother).click();
+    cy.get(SubmitButton).contains("Submit & View Workout");
+    cy.get(SubmitButton).click();
+  });
+  it("displays stretches again, and submits a valid second stretch", () => {
+    cy.get(TitleInput).type(SecondStretchTitle);
+    cy.get(DurationRadio).click();
+    cy.get(DurationInput).clear();
+    cy.get(DurationInput).type(SecondStretchDuration);
     cy.get(SubmitButton).contains("Submit & View Workout");
     cy.get(SubmitButton).click();
   });
@@ -134,5 +149,17 @@ describe("Check the workout creation functionality", () => {
     cy.get(ActivityCard).contains(WarmupTitle + " for " + WarmupReps);
     cy.get(ActivityCard).contains(ExerciseTitle + " for " + ExerciseDuration);
     cy.get(ActivityCard).contains(StretchTitle + " for " + StretchDuration);
+    cy.get(ActivityCard).contains(
+      SecondStretchTitle + " for " + SecondStretchDuration
+    );
+  });
+  it("displays the interstitial page with local storage data present", () => {
+    cy.get(BackButton).contains(backButtonLinkText).click();
+    cy.get(HomeLink).contains(createWorkoutLinkText).click();
+    cy.get(InterstitialCreate).contains("Out with the old, in with the new!");
+    cy.get(InterstitialView).contains("No thanks! Take me to my workout!");
+    cy.get(InterstitialText).contains(
+      "It looks like you have a workout already saved. Would you like to discard this and create a new one?"
+    );
   });
 });
