@@ -14,5 +14,9 @@
   "RepsLabel": "[data-testid=\"repsLabel\"]",
   "RepsError": "[data-testid=\"RepsError\"]",
   "DurationError": "[data-testid=\"DurationError\"]",
-  "ActivityCard": "[data-testid=\"ActivityCard\"]"
+  "ActivityCard": "[data-testid=\"ActivityCard\"]",
+  "InterstitialCreate": "[data-testid=\"InterstitialCreate\"]",
+  "InterstitialView": "[data-testid=\"InterstitialView\"]",
+  "InterstitialText": "[data-testid=\"InterstitialText\"]",
+  "AddAnother": "[data-testid=\"AddAnother\"]"
 }

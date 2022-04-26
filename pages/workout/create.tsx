@@ -1,12 +1,23 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BackButton, FormSection } from "../../components";
 import { ViewSection } from "../../components";
-import { WARMUP, EXERCISE, STRETCH, VIEW } from "../../consts";
+import InterstitialReset from "../../components/InterstitialReset";
+import { WARMUP, EXERCISE, STRETCH, VIEW, INTERSTITIAL } from "../../consts";
 
 const Create: NextPage = () => {
   const [type, setType] = useState(WARMUP);
+
+  useEffect(() => {
+    const warmupInStorage = localStorage.getItem(WARMUP);
+    const exerciseInStorage = localStorage.getItem(EXERCISE);
+    const stretchInStorage = localStorage.getItem(STRETCH);
+
+    if (warmupInStorage || exerciseInStorage || stretchInStorage) {
+      setType(INTERSTITIAL);
+    }
+  }, []);
 
   return (
     <div className="grid place-items-center">
@@ -19,6 +30,7 @@ const Create: NextPage = () => {
       <div className="w-full grid place-items-center gap-5 min-h-screen bg-slate-300">
         <div className="grid place-items-center gap-5 w-1/3">
           <BackButton />
+          {type === INTERSTITIAL && <InterstitialReset setType={setType} />}
           {type === WARMUP && <FormSection type={WARMUP} setType={setType} />}
           {type === EXERCISE && (
             <FormSection type={EXERCISE} setType={setType} />
