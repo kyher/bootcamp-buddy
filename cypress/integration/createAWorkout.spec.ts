@@ -21,6 +21,9 @@ import {
   RepsError,
   ActivityCard,
   AddAnother,
+  InterstitialCreate,
+  InterstitialView,
+  InterstitialText,
 } from "../fixtures/testIds.json";
 import {
   createWorkoutHeading,
@@ -148,6 +151,15 @@ describe("Check the workout creation functionality", () => {
     cy.get(ActivityCard).contains(StretchTitle + " for " + StretchDuration);
     cy.get(ActivityCard).contains(
       SecondStretchTitle + " for " + SecondStretchDuration
+    );
+  });
+  it("displays the interstitial page with local storage data present", () => {
+    cy.get(BackButton).contains(backButtonLinkText).click();
+    cy.get(HomeLink).contains(createWorkoutLinkText).click();
+    cy.get(InterstitialCreate).contains("Out with the old, in with the new!");
+    cy.get(InterstitialView).contains("No thanks! Take me to my workout!");
+    cy.get(InterstitialText).contains(
+      "It looks like you have a workout already saved. Would you like to discard this and create a new one?"
     );
   });
 });
