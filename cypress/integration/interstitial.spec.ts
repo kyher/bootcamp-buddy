@@ -2,6 +2,7 @@ import {
   createWorkoutLinkText,
   backButtonLinkText,
 } from "../fixtures/links.json";
+import { WARMUP } from "../../consts";
 import {
   HomeLink,
   BackButton,
@@ -14,7 +15,19 @@ import "cypress-localstorage-commands";
 
 describe("Check the interstitial page shows when a workout is present", () => {
   beforeEach(() => {
-    cy.restoreLocalStorage();
+    cy.setLocalStorage(
+      WARMUP,
+      JSON.stringify([
+        {
+          title: "tst",
+          repOrDuration: "rep",
+          duration: 1,
+          reps: 15,
+          type: "warmup",
+          addAnother: false,
+        },
+      ])
+    );
   });
   afterEach(() => {
     cy.saveLocalStorage();
