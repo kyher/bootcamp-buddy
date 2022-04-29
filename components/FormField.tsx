@@ -1,13 +1,13 @@
 import { Field } from "formik";
 
 type props = {
-  type: string;
+  fieldType: string;
   workoutType: string;
   value: string | number;
   name: string;
 };
 
-const FormField = ({ type, workoutType, value, name }: props) => {
+const FormField = ({ fieldType, workoutType, value, name }: props) => {
   return (
     <>
       <label
@@ -15,10 +15,10 @@ const FormField = ({ type, workoutType, value, name }: props) => {
         htmlFor={name + "Input"}
         data-testid={name + "Label"}
       >
-        {workoutType}
+        {workoutType} {name}
       </label>
       <Field
-        type={type}
+        type={fieldType}
         id={name + "Input"}
         value={value}
         name={name}
