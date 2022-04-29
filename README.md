@@ -1,11 +1,15 @@
 A NextJS app to create workouts for a bootcamp session e.g. 
 
+```
 WARMUP
 List of warmup activites - x for y mins, z for y reps
+
 EXERCISES
 List of exercises - x for y mins, z for y reps
+
 STRETCHES
 List of warmup activites - x for y mins, z for y reps
+```
 
 
 ## Running local development
