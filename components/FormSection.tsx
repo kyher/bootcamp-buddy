@@ -53,7 +53,7 @@ const FormSection = ({ type, setType }: props) => {
             <Form>
               <FormField
                 workoutType={type}
-                type="text"
+                fieldType="text"
                 value={values.title}
                 name="title"
               />
@@ -69,19 +69,21 @@ const FormSection = ({ type, setType }: props) => {
                   className="m-2"
                   type="radio"
                   value={REP}
+                  id={REP}
                   name="repOrDuration"
                   data-testid="RepRadio"
                 />{" "}
-                Rep
+                <label htmlFor={REP}>Rep</label>
                 <br />
                 <Field
                   className="m-2"
                   type="radio"
                   value={DURATION}
+                  id={DURATION}
                   name="repOrDuration"
                   data-testid="DurationRadio"
                 />{" "}
-                Duration
+                <label htmlFor={DURATION}>Duration</label>
               </div>
               {errors.repOrDuration && touched.repOrDuration ? (
                 <div className="text-red-400" data-testid="RepOrDurError">
@@ -92,7 +94,7 @@ const FormSection = ({ type, setType }: props) => {
                 <>
                   <FormField
                     workoutType={type}
-                    type="number"
+                    fieldType="number"
                     value={values.duration}
                     name="duration"
                   />
@@ -107,7 +109,7 @@ const FormSection = ({ type, setType }: props) => {
                 <>
                   <FormField
                     workoutType={type}
-                    type="number"
+                    fieldType="number"
                     value={values.reps}
                     name="reps"
                   />
@@ -118,14 +120,22 @@ const FormSection = ({ type, setType }: props) => {
                   ) : null}
                 </>
               )}
-              <label>
-                Add another?
+              <div>
+                <label
+                  className="form-check-label inline-block cursor-pointer"
+                  htmlFor="addAnother"
+                >
+                  Add another?
+                </label>
+
                 <Field
                   type="checkbox"
+                  id="addAnother"
                   name="addAnother"
                   data-testid="AddAnother"
+                  className="form-check-input m-2 h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                 />
-              </label>
+              </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
